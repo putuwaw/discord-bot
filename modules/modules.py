@@ -1,5 +1,22 @@
+import time
+from tests import test_routes
+
+COMMANDS = {
+    'start': 'Gives information about the bot',
+    'help': 'Gives information about all of the available commands',
+    'ping': 'Measure the execution time to run test and send a message',
+    'caps your sentence': 'Converts your sentence to uppercase',
+}
+
+
+def get_running_time(start_time):
+    test_routes.test_index()
+    return time.time() - start_time
+
+
 def hello():
     return "Hello, World!"
+
 
 def content():
     return '''
