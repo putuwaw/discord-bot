@@ -10,6 +10,7 @@ Discord-Bot is a repository for my personal Discord bot that I use to automate s
 
 - [x] Uppercase a sentence.
 - [x] Measure running time of test cases.
+- [x] Random picker and random team generator.
 
 > **Note**: The bot is still under development and more features will be added in the future.
 
