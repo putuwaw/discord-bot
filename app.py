@@ -1,5 +1,6 @@
 import os
 import time
+import random
 from modules import modules
 from flask import Flask
 from flask_discord_interactions import DiscordInteractions
@@ -32,6 +33,8 @@ def help(ctx):
 @discord.command()
 def ping(ctx):
     "Measure the execution time to run test and send a message."
+    if str(ctx.author.id) != os.getenv("DISCORD_AUTHOR_ID"):
+        return "You are not allowed to use this command."
     start_time = time.time()
     running_time = modules.get_running_time(start_time)
     return "Pong! Running time: {:.3f} s.".format(running_time)
@@ -43,9 +46,29 @@ def caps(ctx, string: str):
     return string.upper()
 
 
+@discord.command()
+def rand(ctx, string: str):
+    "Choose a random word from sentence, separated by space."
+    string = string.split()
+    idx = random.randint(0, len(string) - 1)
+    return string[idx]
+
+
+@discord.command()
+def team(ctx, n_team: int, string: str):
+    "Generate a random team from sentence, separated by space."
+    string = string.split()
+    try:
+        int(n_team)
+        result = modules.get_random_team(n_team, string)
+        return result
+    except:
+        return "First argument must be a number!"
+
+
 @app.before_first_request
 def register_command():
-    discord.update_commands(guild_id=os.getenv("DISCORD_GUILD_ID"))
+    discord.update_commands()
 
 
 discord.set_route("/interactions")
